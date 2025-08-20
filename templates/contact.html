@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us | Adrija Tours & Travels{% endblock %}
+
+{% block content %}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold">Contact Us</h1>
+                <p class="text-gray-600 mt-2">We'd love to hear from you. Send us a message and we'll get back to you as
+                    soon as possible.</p>
+            </div>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h2 class="text-2xl font-bold mb-4">About Adrija Tours & Travels</h2>
+                    <p class="text-gray-600">Adrija Tours & Travels is a premier travel agency based in Kolkata, West
+                        Bengal, India. We specialize in creating personalized travel experiences for our clients.
+                        Whether you're looking for a relaxing beach vacation, an adventurous mountain trek, or a
+                        cultural city tour, we have something for everyone.</p>
+                    <p class="text-gray-600 mt-4">Our team of experienced travel experts is dedicated to providing you
+                        with the highest level of service and support. We take care of all the details, so you can relax
+                        and enjoy your trip.</p>
+                </div>
+                <div>
+                    <form action="{% url 'contact' %}" method="post" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            {{ form.name }}
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div>
+                            <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone
+                                Number</label>
+                            {{ form.phone_number }}
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                            {{ form.message }}
+                        </div>
+                        <button type="submit"
+                                class="w-full bg-green-500 text-white font-bold py-3 px-6 rounded hover:bg-green-600 transition duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ destination.name }} | Adrija Tours & Travels{% endblock %}
+
+{% block content %}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-4">{{ destination.name }}</h1>
+            <p class="text-lg text-gray-600 mb-8">{{ destination.country }}</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <img src="{{ destination.image.url }}" alt="{{ destination.name }}"
+                         class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4">About {{ destination.name }}</h2>
+                    <div class="prose max-w-none">
+                        {{ destination.description|safe }}
+                    </div>
+                    <p class="mt-4"><strong>Best time to visit:</strong> {{ destination.best_time_to_visit }}</p>
+                </div>
+            </div>
+
+            {% if destination.images.all %}
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-4">Gallery</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {% for image in destination.images.all %}
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                                <img src="{{ image.image.url }}" alt="{{ image.caption }}"
+                                     class="w-full h-48 object-cover">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

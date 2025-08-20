@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Hotels | Adrija Tours & Travels{% endblock %}
+
+{% block content %}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-4xl font-bold text-center mb-8">Find Your Perfect Stay</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for hotel in hotels %}
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <a href="{% url 'hotel_detail' hotel.slug %}">
+                            <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="w-full h-56 object-cover">
+                            <div class="p-6">
+                                <h2 class="text-2xl font-bold">{{ hotel.name }}</h2>
+                                <p class="text-gray-600">{{ hotel.city }}, {{ hotel.country }}</p>
+                                <div class="mt-4 flex justify-between items-center">
+                                    <span class="text-lg font-bold">${{ hotel.price_per_night }} / night</span>
+                                    <span class="text-yellow-500">{{ hotel.rating }} ★</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

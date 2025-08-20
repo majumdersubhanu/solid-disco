@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ hotel.name }} | Adrija Tours & Travels{% endblock %}
+
+{% block content %}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-4">{{ hotel.name }}</h1>
+            <p class="text-lg text-gray-600 mb-8">{{ hotel.city }}, {{ hotel.country }}</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4">About {{ hotel.name }}</h2>
+                    <div class="prose max-w-none">
+                        {{ hotel.description|safe }}
+                    </div>
+                    <p class="mt-4"><strong>Price per night:</strong> ${{ hotel.price_per_night }}</p>
+                    <p><strong>Rating:</strong> {{ hotel.rating }} ★</p>
+                    <p><strong>Address:</strong> {{ hotel.address }}</p>
+                    <p><strong>Amenities:</strong> {{ hotel.amenities }}</p>
+                </div>
+            </div>
+
+            {% if hotel.images.all %}
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-4">Gallery</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {% for image in hotel.images.all %}
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                                <img src="{{ image.image.url }}" alt="{{ image.caption }}"
+                                     class="w-full h-48 object-cover">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
