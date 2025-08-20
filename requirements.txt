@@ -1,0 +1,16 @@
+asgiref==3.9.1
+black==25.1.0
+click==8.2.1
+Django==5.2.5
+django-ckeditor==6.7.3
+django-js-asset==3.1.2
+django-phonenumber-field==8.1.0
+Faker==37.5.3
+mypy_extensions==1.1.0
+packaging==25.0
+pathspec==0.12.1
+phonenumbers==9.0.12
+pillow==11.3.0
+platformdirs==4.3.8
+sqlparse==0.5.3
+tzdata==2025.2
