@@ -1,6 +1,6 @@
+from ckeditor.fields import RichTextField  # Import RichTextField
 from django.db import models
 from django.utils.text import slugify
-from django_ckeditor_5.fields import CKEditor5Field
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -11,7 +11,7 @@ class Hotel(models.Model):
 
     name = models.CharField(max_length=200, help_text="The name of the hotel.")
     # The description field is now a RichTextField for WYSIWYG editing
-    description = CKEditor5Field(
+    description = RichTextField(
         help_text="A detailed description of the hotel, including itinerary and details."
     )
     address = models.CharField(
@@ -75,7 +75,7 @@ class Destination(models.Model):
         max_length=200, help_text="The name of the destination (e.g., Paris, Goa)."
     )
     # The description field is now a RichTextField
-    description = CKEditor5Field(
+    description = RichTextField(
         help_text="A captivating description of the destination, including itinerary and details."
     )
     country = models.CharField(max_length=100)
