@@ -12,18 +12,17 @@ from app.models import (
     Destination,
     DestinationImage,
     Enquiry,
-)  # <-- IMPORTANT: Change 'your_app'
+)
 
 
 class Command(BaseCommand):
-    help = "Populates the database with sample data, including images."
+    help = "Populates the database with sample data (2 hotels, 5 destinations, 25 enquiries)."
 
     def handle(self, *args, **kwargs):
-        # --- Setup ---
         self.stdout.write("Starting database population...")
         fake = Faker("en_IN")
 
-        # --- Clean up old data to prevent duplicates ---
+        # --- Clean up old data ---
         self.stdout.write("Deleting old data...")
         Hotel.objects.all().delete()
         Destination.objects.all().delete()
@@ -61,8 +60,8 @@ class Command(BaseCommand):
             )
             return
 
-        # --- Create Hotels ---
-        self.stdout.write("Creating hotels...")
+        # --- Create Hotels (only 2) ---
+        self.stdout.write("Creating 2 hotels...")
         amenities_options = [
             "Free Wi-Fi",
             "Swimming Pool",
@@ -73,7 +72,7 @@ class Command(BaseCommand):
             "Pet Friendly",
         ]
 
-        for _ in range(20):
+        for _ in range(2):
             hotel = Hotel.objects.create(
                 name=fake.company() + " Hotel & Suites",
                 description=fake.text(max_nb_chars=1500),
@@ -87,12 +86,12 @@ class Command(BaseCommand):
                 ),
                 is_featured=random.choice([True, False]),
             )
-            # Assign a cover image
+            # Assign cover image
             random_image_name = random.choice(hotel_image_files)
             image_path = os.path.join(hotel_images_path, random_image_name)
             hotel.image.save(random_image_name, File(open(image_path, "rb")))
 
-            # Create gallery images for the hotel
+            # Create gallery images
             for _ in range(random.randint(3, 6)):
                 gallery_image_name = random.choice(hotel_image_files)
                 gallery_image_path = os.path.join(hotel_images_path, gallery_image_name)
@@ -105,8 +104,8 @@ class Command(BaseCommand):
                 self.style.SUCCESS(f'Successfully created Hotel: "{hotel.name}"')
             )
 
-        # --- Create Destinations ---
-        self.stdout.write("Creating destinations...")
+        # --- Create Destinations (only 5) ---
+        self.stdout.write("Creating 5 destinations...")
         best_time_options = [
             "October to March",
             "April to June",
@@ -114,7 +113,7 @@ class Command(BaseCommand):
             "July to September",
         ]
 
-        for _ in range(15):
+        for _ in range(5):
             destination = Destination.objects.create(
                 name=fake.city(),
                 description=fake.text(max_nb_chars=2000),
@@ -122,12 +121,12 @@ class Command(BaseCommand):
                 best_time_to_visit=random.choice(best_time_options),
                 is_featured=random.choice([True, False]),
             )
-            # Assign a cover image
+            # Assign cover image
             random_image_name = random.choice(dest_image_files)
             image_path = os.path.join(dest_images_path, random_image_name)
             destination.image.save(random_image_name, File(open(image_path, "rb")))
 
-            # Create gallery images for the destination
+            # Create gallery images
             for _ in range(random.randint(4, 7)):
                 gallery_image_name = random.choice(dest_image_files)
                 gallery_image_path = os.path.join(dest_images_path, gallery_image_name)
@@ -139,13 +138,11 @@ class Command(BaseCommand):
                 )
 
             self.stdout.write(
-                self.style.SUCCESS(
-                    f'Successfully created Destination: "{destination.name}"'
-                )
+                self.style.SUCCESS(f'Successfully created Destination: "{destination.name}"')
             )
 
-        # --- Create Enquiries ---
-        self.stdout.write("Creating enquiries...")
+        # --- Create Enquiries (keep 25) ---
+        self.stdout.write("Creating 25 enquiries...")
         for _ in range(25):
             Enquiry.objects.create(
                 name=fake.name(),
@@ -156,5 +153,5 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS("Successfully created 25 enquiries."))
 
         self.stdout.write(
-            self.style.SUCCESS("Database has been successfully populated!")
+            self.style.SUCCESS("Database has been successfully populated with 2 hotels, 5 destinations, and 25 enquiries!")
         )
